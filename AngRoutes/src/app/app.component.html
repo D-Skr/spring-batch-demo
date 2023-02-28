@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>Capgemini + Chubb = Angular</h1>
+  <h2>Simple Routing</h2>
+  <nav>
+    <a routerLink="/" routerLinkActive="active one" [routerLinkActiveOptions]="{exact: true}">First</a>
+    <a routerLink="/second" routerLinkActive="active two">Second</a>
+    <a routerLink="/third" routerLinkActive="active three">Third</a>
+    <a routerLink="/fourth" routerLinkActive="active four">Fourth</a>
+  </nav>
+  <br>
+  <hr>
+  <!-- router - outlet shows component chosen with route in RouterModule.forRoot()
+  that is why no static components-->
+  <router-outlet></router-outlet>
+</div>
