@@ -21,7 +21,7 @@ public class InMemReader  extends AbstractItemStreamItemReader {
             nextItem = list.get(index);
             index++;
         } else {
-            return nextItem;
+            index = 0;
         }
         return nextItem;
     }
