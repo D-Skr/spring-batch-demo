@@ -8,6 +8,7 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,15 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class Demo1Application {
 
-    @Autowired
+
+    /*
+       @Bean
+    public Job myJob(JobRepository jobRepository, Step step) {
+        return new JobBuilder("myJob", jobRepository)
+                .start(step)
+                .build();
+     */
+    @Autowired(required=false)
     private JobBuilderFactory jobs;
 
     @Autowired
@@ -30,10 +39,23 @@ public class Demo1Application {
     }
 
     @Bean
+    public Job demoJob(){
+        return jobs.get("demoJob")
+                .start(step1())
+                .build();
+//            return new JobBuilder("demoJob")
+//                    .start(step1())
+//                    .build();
+    }
+    @Bean
     public Step step1(){
         return steps.get("step1")
                 .tasklet(demoTasklet())
                 .build();
+//    public Step step1() {
+//        return new StepBuilder("step1")
+//                .tasklet(demoTasklet())
+//                .build();
     }
 
     private Tasklet demoTasklet() {
@@ -46,10 +68,4 @@ public class Demo1Application {
         });
     }
 
-    @Bean
-    public Job demoJob(){
-        return jobs.get("demoJob")
-                .start(step1())
-                .build();
-    }
 }
