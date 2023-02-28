@@ -4,6 +4,7 @@ import com.example.demo1.listener.DemoJobExecutionListener;
 import com.example.demo1.listener.DemoStepExecutionListener;
 import com.example.demo1.processor.InMemItemProcessor;
 import com.example.demo1.reader.InMemReader;
+import com.example.demo1.writer.ConsoleItemWriter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
@@ -14,6 +15,7 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -53,6 +55,7 @@ public class BatchConfig {
         return jobs.get("demoJob")
                 .listener(demoListener)
                 .start(step1())
+                .next(step2())
                 .build();
 //            return new JobBuilder("demoJob")
 //                    .start(step1())
@@ -81,8 +84,8 @@ public class BatchConfig {
         return steps.get("steps2")
                 .<Integer,Integer>chunk(3)
                 .reader(reader())
-                .processor(inMemItemProcessor())
-                .writer(writer())
+                .processor(inMemItemProcessor)
+                .writer(new ConsoleItemWriter())
                 .build();
     }
 }

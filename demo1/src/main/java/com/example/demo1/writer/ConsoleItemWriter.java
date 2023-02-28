@@ -13,4 +13,5 @@ public class ConsoleItemWriter extends AbstractItemStreamItemWriter {
         items.stream().forEach(System.out::println);
         System.out.println("******** writing each chunk ********");
     }
+
 }
