@@ -1,6 +1,7 @@
 package com.example.config;
 
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -14,10 +15,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SampleJob1 {
 
-    @Autowired
+    @Autowired(required = false)
     private JobBuilderFactory jobBuilderFactory;
 
-    @Autowired
+    @Autowired(required = false)
     private StepBuilderFactory stepBuilderFactory;
 
     @Bean
@@ -28,7 +29,7 @@ public class SampleJob1 {
     }
 
     private Step firstStep(){
-        stepBuilderFactory.get("First Step")
+        return stepBuilderFactory.get("First Step")
                 .tasklet(firstTask())
                 .build();
 
@@ -39,8 +40,8 @@ public class SampleJob1 {
             @Override
             public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
                 System.out.println("This is the 1st tasklet step.");
-                return null;
+                return RepeatStatus.FINISHED;
             }
-        }
+        };
     }
 }
