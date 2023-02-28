@@ -1,6 +1,7 @@
 package com.example.demo1.config;
 
 import com.example.demo1.listener.DemoJobExecutionListener;
+import com.example.demo1.listener.DemoStepExecutionListener;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
@@ -27,6 +28,9 @@ public class BatchConfig {
     @Autowired
     private DemoJobExecutionListener demoListener;
 
+    @Autowired
+    private DemoStepExecutionListener demoStepExecutionListener;
+
     private Tasklet demoTasklet() {
         return (new Tasklet() {
             @Override
@@ -50,6 +54,7 @@ public class BatchConfig {
     @Bean
     public Step step1(){
         return steps.get("step1")
+                .listener(demoStepExecutionListener)
                 .tasklet(demoTasklet())
                 .build();
 //    public Step step1() {
