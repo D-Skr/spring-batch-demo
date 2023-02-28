@@ -2,6 +2,8 @@ package com.example.demo1.config;
 
 import com.example.demo1.listener.DemoJobExecutionListener;
 import com.example.demo1.listener.DemoStepExecutionListener;
+import com.example.demo1.processor.InMemItemProcessor;
+import com.example.demo1.reader.InMemReader;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
@@ -10,6 +12,8 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +34,9 @@ public class BatchConfig {
 
     @Autowired
     private DemoStepExecutionListener demoStepExecutionListener;
+
+    @Autowired
+    public InMemItemProcessor inMemItemProcessor;
 
     private Tasklet demoTasklet() {
         return (new Tasklet() {
@@ -61,5 +68,21 @@ public class BatchConfig {
 //        return new StepBuilder("step1")
 //                .tasklet(demoTasklet())
 //                .build();
+    }
+
+    @Bean
+    public ItemReader reader(){
+        return new InMemReader();
+    }
+
+
+    @Bean
+    public Step step2(){
+        return steps.get("steps2")
+                .<Integer,Integer>chunk(3)
+                .reader(reader())
+                .processor(inMemItemProcessor())
+                .writer(writer())
+                .build();
     }
 }
