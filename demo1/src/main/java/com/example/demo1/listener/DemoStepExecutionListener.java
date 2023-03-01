@@ -10,12 +10,13 @@ public class DemoStepExecutionListener implements StepExecutionListener {
     @Override
     public void beforeStep(StepExecution stepExecution) {
         System.out.println("this is before step execution" + stepExecution.getJobExecution().getExecutionContext());
-        StepExecutionListener.super.beforeStep(stepExecution);
+        //StepExecutionListener.super.beforeStep(stepExecution);
     }
 
     @Override
     public ExitStatus afterStep(StepExecution stepExecution) {
         System.out.println("this is from After step execution" + stepExecution.getJobExecution().getExecutionContext());
-        return StepExecutionListener.super.afterStep(stepExecution);
+        //return StepExecutionListener.super.afterStep(stepExecution);
+        return null;
     }
 }
