@@ -97,7 +97,6 @@ public class BatchJobConfiguration {
 //                }
 //            })
 //            .build();
-        return this.stepBuilderFactory
             .get(Constants.STEP_NAME)
             .<PatientRecord, PatientRecord>chunk(2)
             .reader(itemReader)
