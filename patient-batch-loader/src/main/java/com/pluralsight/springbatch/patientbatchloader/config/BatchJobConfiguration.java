@@ -1,5 +1,7 @@
 package com.pluralsight.springbatch.patientbatchloader.config;
 
+import com.pluralsight.springbatch.patientbatchloader.PatientBatchLoaderApp;
+import com.pluralsight.springbatch.patientbatchloader.domain.PatientRecord;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.JobRegistry;
@@ -8,6 +10,7 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -71,16 +74,24 @@ public class BatchJobConfiguration {
     }
 
     @Bean
-    public Step step() throws Exception {
+    public Step step(ItemReader<PatientRecord> itemReader) throws Exception {
+        return this.stepBuilderFactory
+//            remove test code
+//            .get(Constants.STEP_NAME)
+//            .tasklet(new Tasklet() {
+//                @Override
+//                public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+//                    System.out.println("Hello World!");
+//                    return RepeatStatus.FINISHED;
+//                }
+//            })
+//            .build();
         return this.stepBuilderFactory
             .get(Constants.STEP_NAME)
-            .tasklet(new Tasklet() {
-                @Override
-                public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-                    System.out.println("Hello World!");
-                    return RepeatStatus.FINISHED;
-                }
-            })
+            .<PatientRecord, PatientRecord>chunk(2)
+            .reader(itemReader)
+            .processor(processor())
+            .writer(writer())
             .build();
     }
 
