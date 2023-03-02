@@ -15,6 +15,9 @@ public class BatchJobConfiguration {
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
 
+    @Autowired
+    private ApplicationProperties applicationProperties;
+
     @Bean
     JobRegistryBeanPostProcessor jobRegistryBeanPostProcessor(JobRegistry jobRegistry) {
         JobRegistryBeanPostProcessor postProcessor = new JobRegistryBeanPostProcessor();
