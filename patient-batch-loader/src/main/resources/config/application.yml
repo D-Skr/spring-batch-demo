@@ -50,4 +50,5 @@ management:
 # ===================================================================
 application:
     batch:
-        inputPath: c:/Projects/patient-batch-loader/data
+        inputPath: C:/Projects/patient-batch-loader/data
+

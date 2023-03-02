@@ -18,7 +18,7 @@ public class ApplicationProperties {
     }
 
     public static class Batch {
-        private String inputPath = "c:/Projects/patient-batch-loader/data"
+        private String inputPath = "c:/Projects/patient-batch-loader/data";
         private String getInputPath() {
             return this.inputPath;
         }
