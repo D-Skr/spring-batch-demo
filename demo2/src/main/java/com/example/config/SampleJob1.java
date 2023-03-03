@@ -53,7 +53,7 @@ public class SampleJob1 {
 
     private Step secondStep(){
         return stepBuilderFactory.get("Second Step")
-                .tasklet(secondTask())
+                .tasklet(secondTasklet)
                 .build();
 
     }
