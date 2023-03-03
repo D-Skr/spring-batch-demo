@@ -1,5 +1,6 @@
 package com.example.config;
 
+import com.example.service.SecondTasklet;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
@@ -20,6 +21,9 @@ public class SampleJob1 {
 
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
+
+    @Autowired
+    private SecondTasklet secondTasklet;
 
     @Bean
     public Job firstJob(){
@@ -54,13 +58,14 @@ public class SampleJob1 {
 
     }
 
-    private Tasklet secondTask(){
-        return new Tasklet() {
-            @Override
-            public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-                System.out.println("This is the 2nd tasklet step.");
-                return RepeatStatus.FINISHED;
-            }
-        };
-    }
+    //moved this part to the service
+//    private Tasklet secondTask(){
+//        return new Tasklet() {
+//            @Override
+//            public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+//                System.out.println("This is the 2nd tasklet step.");
+//                return RepeatStatus.FINISHED;
+//            }
+//        };
+//    }
 }
