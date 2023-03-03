@@ -15,10 +15,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SampleJob1 {
 
-    @Autowired(required = false)
+    @Autowired
     private JobBuilderFactory jobBuilderFactory;
 
-    @Autowired(required = false)
+    @Autowired
     private StepBuilderFactory stepBuilderFactory;
 
     @Bean
