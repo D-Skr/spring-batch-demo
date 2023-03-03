@@ -1,6 +1,7 @@
 package com.example.config;
 
 import com.example.listener.FirstJobListener;
+import com.example.listener.FirstStepListener;
 import com.example.service.SecondTasklet;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -30,6 +31,10 @@ public class SampleJob1 {
     @Autowired
     private FirstJobListener firstJobListener;
 
+
+    @Autowired
+    private FirstStepListener firstStepListener;
+
     @Bean
     public Job firstJob(){
         return jobBuilderFactory.get("First Job")
@@ -43,6 +48,7 @@ public class SampleJob1 {
     private Step firstStep(){
         return stepBuilderFactory.get("First Step")
                 .tasklet(firstTask())
+                .listener(firstStepListener)
                 .build();
 
     }
