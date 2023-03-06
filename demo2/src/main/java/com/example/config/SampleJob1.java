@@ -35,7 +35,7 @@ public class SampleJob1 {
     @Autowired
     private FirstStepListener firstStepListener;
 
-    @Bean
+    //@Bean
     public Job firstJob(){
         return jobBuilderFactory.get("First Job")
                 .incrementer(new RunIdIncrementer())
@@ -82,4 +82,11 @@ public class SampleJob1 {
 //            }
 //        };
 //    }
+
+    @Bean
+    public Job secondJob(){
+        return jobBuilderFactory.get("Second Job")
+                .incrementer(new RunIdIncrementer())
+                .build();
+    }
 }
