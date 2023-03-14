@@ -100,12 +100,16 @@ public class SampleJob1 {
     public Job secondJob(){
         return jobBuilderFactory.get("Second Job")
                 .incrementer(new RunIdIncrementer())
+                .start(firstChunkStep())
                 .build();
     }
 
     private Step firstChunkStep(){
         return stepBuilderFactory.get("First Chunk Step")
                 .<Integer,Long>chunk(3)
+                .reader(firstItemReader)
+                .processor(firstItemProcessor)
+                .writer(firstItemWriter)
                 .build();
 
     }
