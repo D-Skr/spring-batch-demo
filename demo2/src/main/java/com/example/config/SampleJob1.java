@@ -102,4 +102,11 @@ public class SampleJob1 {
                 .incrementer(new RunIdIncrementer())
                 .build();
     }
+
+    private Step firstChunkStep(){
+        return stepBuilderFactory.get("First Chunk Step")
+                .<Integer,Long>chunk(3)
+                .build();
+
+    }
 }
