@@ -2,7 +2,10 @@ package com.example.config;
 
 import com.example.listener.FirstJobListener;
 import com.example.listener.FirstStepListener;
+import com.example.processor.FirstItemProcessor;
+import com.example.reader.FirstItemReader;
 import com.example.service.SecondTasklet;
+import com.example.writer.FirstItemWriter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
@@ -34,6 +37,16 @@ public class SampleJob1 {
 
     @Autowired
     private FirstStepListener firstStepListener;
+
+    @Autowired
+    private FirstItemReader firstItemReader;
+
+    @Autowired
+    private FirstItemProcessor firstItemProcessor;
+
+    @Autowired
+    private FirstItemWriter firstItemWriter;
+
 
     //@Bean
     public Job firstJob(){
