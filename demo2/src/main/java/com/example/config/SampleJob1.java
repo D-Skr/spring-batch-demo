@@ -48,7 +48,7 @@ public class SampleJob1 {
     private FirstItemWriter firstItemWriter;
 
 
-    //@Bean
+    @Bean
     public Job firstJob(){
         return jobBuilderFactory.get("First Job")
                 .incrementer(new RunIdIncrementer())
