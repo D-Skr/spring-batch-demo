@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.service.JobService;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
@@ -22,12 +23,13 @@ import java.util.Map;
 @RequestMapping("/api/job")
 public class JobController {
 
-
+    @Autowired
+    JobService jobService;
 
     @GetMapping("/start/{jobName}")
     public String startJob(@PathVariable String jobName) throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
 
-
+        jobService.startJob(jobName);
         return "Job started...";
     }
 }

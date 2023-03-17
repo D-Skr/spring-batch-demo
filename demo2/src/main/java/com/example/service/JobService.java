@@ -1,6 +1,7 @@
 package com.example.service;
 
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -26,17 +27,19 @@ public class JobService {
     @Autowired
     Job secondJob;
     @Async
-    public void srartJob(String jobName){
+    public void startJob(String jobName){
         Map<String, JobParameter> params = new HashMap<>();
         params.put("currentTime", new JobParameter(System.currentTimeMillis()));
 
         JobParameters jobParameters = new JobParameters(params);
         try {
+            JobExecution jobExecution = null;
             if (jobName.equals("First job")) {
-                jobLauncher.run(firstJob, jobParameters);
+                jobExecution = jobLauncher.run(firstJob, jobParameters);
             } else {
-                jobLauncher.run(secondJob, jobParameters);
+                jobExecution = jobLauncher.run(secondJob, jobParameters);
             }
+            System.out.println("jobExecution ID = " + jobExecution.getId());
         } catch (Exception e){
             System.out.println("Exception while running a job");
         }
