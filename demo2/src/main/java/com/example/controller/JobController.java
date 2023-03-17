@@ -22,30 +22,12 @@ import java.util.Map;
 @RequestMapping("/api/job")
 public class JobController {
 
-    @Autowired
-    JobLauncher jobLauncher;
 
-    @Qualifier("firstJob")
-    @Autowired
-    Job firstJob;
-
-    @Qualifier("secondJob")
-    @Autowired
-    Job secondJob;
 
     @GetMapping("/start/{jobName}")
     public String startJob(@PathVariable String jobName) throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
 
-        Map<String, JobParameter> params = new HashMap<>();
-        params.put("currentTime", new JobParameter(System.currentTimeMillis()));
 
-        JobParameters jobParameters = new JobParameters(params);
-        if(jobName.equals("First job")) {
-            jobLauncher.run(firstJob, jobParameters);
-        } else {
-            jobLauncher.run(secondJob, jobParameters);
-
-        }
         return "Job started...";
     }
 }
