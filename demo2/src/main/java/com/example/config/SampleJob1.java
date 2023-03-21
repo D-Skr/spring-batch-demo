@@ -2,6 +2,7 @@ package com.example.config;
 
 import com.example.listener.FirstJobListener;
 import com.example.listener.FirstStepListener;
+import com.example.model.StudentCsv;
 import com.example.processor.FirstItemProcessor;
 import com.example.reader.FirstItemReader;
 import com.example.service.SecondTasklet;
@@ -14,10 +15,14 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.FileSystemResource;
+
+import java.io.File;
 
 @Configuration
 public class SampleJob1 {
@@ -112,5 +117,11 @@ public class SampleJob1 {
                 .writer(firstItemWriter)
                 .build();
 
+    }
+
+    public FlatFileItemReader<StudentCsv> flatFileItemReader() {
+        FlatFileItemReader<StudentCsv> flatFileItemReader = new FlatFileItemReader<StudentCsv>();
+        flatFileItemReader.setResource(new FileSystemResource(new File("C:\\Projects\\demo2\\InputFiles\\student.csv")));
+        return flatFileItemReader;
     }
 }
