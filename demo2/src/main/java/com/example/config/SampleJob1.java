@@ -16,6 +16,10 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
+import org.springframework.batch.item.file.mapping.DefaultLineMapper;
+import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
+import org.springframework.batch.item.file.transform.LineTokenizer;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -122,6 +126,21 @@ public class SampleJob1 {
     public FlatFileItemReader<StudentCsv> flatFileItemReader() {
         FlatFileItemReader<StudentCsv> flatFileItemReader = new FlatFileItemReader<StudentCsv>();
         flatFileItemReader.setResource(new FileSystemResource(new File("C:\\Projects\\demo2\\InputFiles\\student.csv")));
+        flatFileItemReader.setLineMapper(new DefaultLineMapper<StudentCsv>(){
+            {
+            setLineTokenizer(new DelimitedLineTokenizer() {
+                //super.setLineTokenizer(tokenizer);
+                    {
+                    setNames("ID","First Name","Last Name","Email");
+                    }
+                });
+            setFieldSetMapper(new BeanWrapperFieldSetMapper<StudentCsv>(){
+                {
+                    setTargetType(StudentCsv.class);
+                }
+            });
+            }
+        });
         return flatFileItemReader;
     }
 }
