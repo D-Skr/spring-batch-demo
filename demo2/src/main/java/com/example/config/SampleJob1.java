@@ -141,6 +141,7 @@ public class SampleJob1 {
             });
             }
         });
+        flatFileItemReader.setLinesToSkip(1); //skip 1st line with headers
         return flatFileItemReader;
     }
 }
